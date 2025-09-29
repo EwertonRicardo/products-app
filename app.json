@@ -2,6 +2,7 @@
   "expo": {
     "name": "products-app",
     "slug": "products-app",
+    "scheme": "myproductsapp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -13,7 +14,22 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.productsapp",
+      "infoPlist": {
+        "CFBundleURLTypes": [
+          {
+            "CFBundleURLSchemes": [
+              "myproductsapp"
+            ]
+          }
+        ],
+        "NSCalendarsUsageDescription": "Precisamos acessar seu calendário para criar lembretes."
+      },
+      "associatedDomains": [
+        "applinks:myproductsapp.example.com"
+      ],
+      "appleTeamId": "88RBV8X8Z9"
     },
     "android": {
       "adaptiveIcon": {
@@ -21,7 +37,24 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.anonymous.productsapp",
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "data": [
+            {
+              "scheme": "https",
+              "host": "myproductsapp.example.com",
+              "pathPrefix": "/"
+            }
+          ],
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
+        }
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
