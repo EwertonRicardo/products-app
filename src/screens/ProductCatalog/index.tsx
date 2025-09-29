@@ -81,26 +81,30 @@ export const ProductCatalog: FC = () => {
     <SafeAreaView style={styles.safeArea}>
       <Header onFilterPress={handleOpenSortSheet} />
 
+      <View style={styles.container}>
+        <View>
+          <CategoriesList
+            categories={categories}
+            activeCategory={selectedCategory}
+            onPressCategory={handlePressCategory}
+          />
+        </View>
+
+        <View style={styles.productsContainer}>
+          <ProductsList
+            products={products}
+            onProductPress={handleProductPress}
+            isLoading={loadingProducts}
+          />
+        </View>
+      </View>
+
       <ActionSheet ref={actionSheetRef} containerStyle={{ height: "20%" }}>
         <SortBySelector
           selectedSortOption={selectedSortOption}
           onSelectSortOption={handleSelectSortBy}
         />
       </ActionSheet>
-
-      <View style={styles.container}>
-        <CategoriesList
-          categories={categories}
-          activeCategory={selectedCategory}
-          onPressCategory={handlePressCategory}
-        />
-
-        <ProductsList
-          products={products}
-          onProductPress={handleProductPress}
-          isLoading={loadingProducts}
-        />
-      </View>
     </SafeAreaView>
   );
 };
@@ -114,5 +118,8 @@ const styles = StyleSheet.create({
     flex: 1,
     gap: 8,
     marginTop: 16,
+  },
+  productsContainer: {
+    flex: 1,
   },
 });

@@ -4,8 +4,12 @@ import { View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
 import type { RootStackParamList } from "@navigation/types";
 import { useProductDetail } from "@hooks/useProductDetail";
 import { addReminder } from "../../../modules/purchase-reminder";
-import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 import { ErrorState, LoadingState } from "@components";
+import { Pill } from "./components";
 
 const FIVE_MINUTES_IN_MS = 5 * 60 * 1000; // 5 minutes in milliseconds
 
@@ -18,6 +22,8 @@ export const ProductDetail: FC = () => {
   const { productId } = route.params;
 
   const { product, isLoading, isError } = useProductDetail(productId);
+
+  const insets = useSafeAreaInsets();
 
   const handlePurchaseReminder = useCallback(async () => {
     try {
@@ -60,44 +66,54 @@ export const ProductDetail: FC = () => {
   }
 
   return (
-    <SafeAreaView style={styles.safeAre}>
-      <View style={styles.container}>
-        <Image source={{ uri: product.thumbnail }} style={styles.image} />
+    <React.Fragment>
+      <View style={[styles.topSafeArea, { height: insets.top }]} />
 
-        <View style={styles.content}>
-          <View>
-            <Text style={styles.title}>{product.title}</Text>
-            <Text>${product.price}</Text>
-            <Text>Brand: {product.brand}</Text>
-            <Text>Stock: {product.stock}</Text>
-            <Text style={styles.description}>{product.description}</Text>
-          </View>
+      <SafeAreaView style={styles.safeArea} edges={["bottom", "left", "right"]}>
+        <View style={styles.container}>
+          <Image source={{ uri: product.thumbnail }} style={styles.image} />
 
-          <View style={styles.footer}>
-            <TouchableOpacity
-              style={styles.purchaseReminderBtn}
-              onPress={handlePurchaseReminder}
-              activeOpacity={0.5}
-            >
-              <Text style={styles.textBtn}>Set 5-minute Reminder</Text>
-            </TouchableOpacity>
+          <View style={styles.content}>
+            <View>
+              <Text style={styles.title}>{product.title}</Text>
 
-            <TouchableOpacity
-              style={styles.backBtn}
-              onPress={handleGoBack}
-              activeOpacity={0.5}
-            >
-              <Text style={styles.textBtn}>Go back</Text>
-            </TouchableOpacity>
+              <View style={styles.pillContainer}>
+                <Pill label={`$ ${product.price}`} />
+                <Pill label={`Brand - ${product.brand}`} />
+                <Pill label={`Stock - ${product.stock}`} />
+              </View>
+              <Text style={styles.description}>{product.description}</Text>
+            </View>
+
+            <View style={styles.footer}>
+              <TouchableOpacity
+                style={styles.purchaseReminderBtn}
+                onPress={handlePurchaseReminder}
+                activeOpacity={0.5}
+              >
+                <Text style={styles.textBtn}>Set 5-minute Reminder</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.backBtn}
+                onPress={handleGoBack}
+                activeOpacity={0.5}
+              >
+                <Text style={styles.textBtn}>Go back</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </React.Fragment>
   );
 };
 
 const styles = StyleSheet.create({
-  safeAre: {
+  topSafeArea: {
+    backgroundColor: "#f6f8fc",
+  },
+  safeArea: {
     flex: 1,
     backgroundColor: "#fff",
   },
@@ -124,7 +140,7 @@ const styles = StyleSheet.create({
     color: "#6B6B6B",
   },
   description: {
-    marginTop: 8,
+    marginTop: 16,
     color: "#6B6B6B",
   },
   purchaseReminderBtn: {
@@ -148,5 +164,10 @@ const styles = StyleSheet.create({
   },
   footer: {
     gap: 16,
+  },
+  pillContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
   },
 });

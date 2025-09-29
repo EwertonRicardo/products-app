@@ -39,7 +39,6 @@ const AppNavigator = () => {
           component={ProductDetail}
           options={{
             headerShown: false,
-            presentation: "modal",
           }}
         />
       </Stack.Navigator>
