@@ -212,5 +212,4 @@ adb shell am start -W -a android.intent.action.VIEW -d "myproductsapp://product/
 - All API calls include error handling and loading states.
 - `ErrorState` and `LoadingState` components are reusable for all screens.
 - Native Module is fully optional, but integrated in ProductDetailScreen.
-```
 
