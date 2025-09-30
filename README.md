@@ -176,7 +176,7 @@ await addReminder(`Reminder for ${product.title}`, Date.now() + 5 * 60 * 1000);
 
 ### Clone and install
 ```bash
-git clone <https://github.com/EwertonRicardo/products-app.git>
+git clone https://github.com/EwertonRicardo/products-app.git
 cd ProductsApp
 npm install
 ```
