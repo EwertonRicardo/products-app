@@ -8,6 +8,7 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
+     "platforms": ["ios", "android"],
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
@@ -44,9 +45,8 @@
           "action": "VIEW",
           "data": [
             {
-              "scheme": "https",
-              "host": "myproductsapp.example.com",
-              "pathPrefix": "/"
+              "scheme": "myproductsapp",
+              "host": "*"
             }
           ],
           "category": [

@@ -1,6 +1,13 @@
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import React, { FC, useCallback } from "react";
-import { View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Image,
+  Text,
+  TouchableOpacity,
+  Platform,
+} from "react-native";
 import type { RootStackParamList } from "@navigation/types";
 import { useProductDetail } from "@hooks/useProductDetail";
 import { addReminder } from "../../../modules/purchase-reminder";
@@ -11,7 +18,9 @@ import {
 import { ErrorState, LoadingState } from "@components";
 import { Pill } from "./components";
 
-const FIVE_MINUTES_IN_MS = 5 * 60 * 1000; // 5 minutes in milliseconds
+const FIVE_MINUTES_IN_MS = 5 * 60 * 1000;
+
+const isIOS = Platform.OS === "ios";
 
 type ProductDetailRouteProp = RouteProp<RootStackParamList, "ProductDetail">;
 
@@ -86,13 +95,15 @@ export const ProductDetail: FC = () => {
             </View>
 
             <View style={styles.footer}>
-              <TouchableOpacity
-                style={styles.purchaseReminderBtn}
-                onPress={handlePurchaseReminder}
-                activeOpacity={0.5}
-              >
-                <Text style={styles.textBtn}>Set 5-minute Reminder</Text>
-              </TouchableOpacity>
+              {isIOS && (
+                <TouchableOpacity
+                  style={styles.purchaseReminderBtn}
+                  onPress={handlePurchaseReminder}
+                  activeOpacity={0.5}
+                >
+                  <Text style={styles.textBtn}>Set 5-minute Reminder</Text>
+                </TouchableOpacity>
+              )}
 
               <TouchableOpacity
                 style={styles.backBtn}
